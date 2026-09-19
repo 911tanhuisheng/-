@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: Sandbox
+  config:
+    import: optional:classpath:application-local.yml
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      database: ${REDIS_DATABASE:0}
+      timeout: 3000ms
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api
+
+sandbox:
+  auth:
+    key: ${SANDBOX_AUTH_KEY:123456}
+  tmp-dir: ${SANDBOX_TMP_DIR:tmpCode}
+  rate-limit:
+    enabled: true
+    fallback-enabled: true
+    window-seconds: 60
+    limit: 10
+    local-max-keys: 10000
+  docker:
+    startup-check-enabled: true
+    java-image: eclipse-temurin:17-jdk
+    python-image: ${SANDBOX_PYTHON_IMAGE:mayue-oj-python-vision:1.0}
+    cpp-image: gcc:13
+  execution:
+    max-concurrent: 4
+    acquire-timeout-ms: 1500
+    local-compile-timeout-ms: 10000
+    local-run-timeout-ms: 5000
+    docker-compile-timeout-ms: 10000
+    docker-run-timeout-ms: 5000
+  security:
+    max-code-length: 100000
+    max-case-count: 20
+
+jwt:
+  secret: ${JWT_SECRET:ChangeMe-DevOnly-Set-JWT-SECRET-At-Least-32-Chars!!}
+  expiration: 86400
+
+type:
+  user: docker
