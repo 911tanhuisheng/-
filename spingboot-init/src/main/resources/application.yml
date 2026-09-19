@@ -1,4 +1,7 @@
 spring:
+  # 本机或服务器私密覆盖配置：application-local.yml 已被 Git 忽略。
+  config:
+    import: optional:classpath:application-local.yml
   # 题图拍照/OCR 上传：Spring Boot 默认单文件仅 1MB，图像题允许最大 10MB。
   servlet:
     multipart:
